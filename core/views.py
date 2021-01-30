@@ -1,13 +1,14 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
-from django.views.generic import DetailView, View
+from django.views.generic import DetailView, View, ListView
+from django.core.exceptions import PermissionDenied
 
-from core.models import Aluno, Inscricao, Nota
+from core.models import Aluno, Inscricao, Nota, Disciplina
 
 
 @method_decorator(login_required, name='dispatch')
-class VisualizarNotasControl(DetailView):
+class VisualizarNotasControl(ListView):
     model = Nota
     template_name = 'TelaVisualizarNotas.html'
 
@@ -20,52 +21,40 @@ class VisualizarNotasControl(DetailView):
         return notas
 
 
-class LancarNotasControl(View):
-    slug_field = 'titulo'
-    model = Nota
-    context_object_name = 'meu_artigo'
-    template_name = 'detalhe_artigo.html'
+@method_decorator(login_required, name='dispatch')
+class ControlarAndamentoInscricoesControl(ListView):
+    model = Inscricao
+    template_name = 'ControlarAndamentoInscricoes.html'
 
-    def get_queryset(self):
-        return self.model.filter(user=self.request.user)
+    def get_context_data(self, **kwargs):
+        context = super(ControlarAndamentoInscricoesControl, self).get_context_data(**kwargs)
+        disciplina = get_object_or_404(Disciplina, pk=self.kwargs['pk'])
+        context['disciplina'] = disciplina.nome
+        context['object_list'] = Inscricao.objects.filter(disciplina__pk=self.kwargs['pk'])
+        return context
+
+    def get(self, request, *args, **kwargs):
+        if not self.request.user.is_superuser:
+            raise PermissionDenied()
+        return super(ControlarAndamentoInscricoesControl, self).get(request, *args, **kwargs)
+
+
+class LancarNotasControl(View):
+    pass
 
 
 class AbrirTurmaControl(View):
-    slug_field = 'titulo'
-    model = Nota
-    context_object_name = 'meu_artigo'
-    template_name = 'detalhe_artigo.html'
-
-    def get_queryset(self):
-        return self.model.filter(user=self.request.user)
+    pass
 
 
 class ControlarPrazosControl(View):
-    slug_field = 'titulo'
-    model = Nota
-    context_object_name = 'meu_artigo'
-    template_name = 'detalhe_artigo.html'
-
-    def get_queryset(self):
-        return self.model.filter(user=self.request.user)
+    pass
 
 
 class ControlarAtrasosControl(View):
-    slug_field = 'titulo'
-    model = Nota
-    context_object_name = 'meu_artigo'
-    template_name = 'detalhe_artigo.html'
-
-    def get_queryset(self):
-        return self.model.filter(user=self.request.user)
+    pass
 
 
 class RealizarInscricaoControl(View):
-    slug_field = 'titulo'
-    model = Nota
-    context_object_name = 'meu_artigo'
-    template_name = 'detalhe_artigo.html'
-
-    def get_queryset(self):
-        return self.model.filter(user=self.request.user)
+    pass
 

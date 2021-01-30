@@ -1,19 +1,20 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
 class User(AbstractUser):
     is_professor = models.BooleanField(default=False)
     is_aluno = models.BooleanField(default=False)
 
 
 class Aluno(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User, related_name='aluno', on_delete=models.CASCADE, primary_key=True)
     matricula = models.CharField(max_length=12, unique=True)
     nome = models.CharField(max_length=32)
 
 
 class Professor(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User, related_name='professor', on_delete=models.CASCADE, primary_key=True)
     matricula = models.CharField(max_length=12, unique=True)
     nome = models.CharField(max_length=32)
 

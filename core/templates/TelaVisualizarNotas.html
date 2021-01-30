@@ -1,4 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h1>Notas</h1>
+<ul>
+    {% for nota in object_list %}
+        <li>{{ nota.nota }} - {{ nota.inscricao.disciplina }} ({{ nota.inscricao.semestre }})</li>
+    {% empty %}
+        <li>Sem notas ainda.</li>
+    {% endfor %}
+    </ul>
 {% endblock %}

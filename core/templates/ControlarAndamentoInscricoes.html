@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>Alunos inscritos na disciplina {{ disciplina }}</h3>
+<ul>
+    {% for aluno in object_list %}
+        <li>{{ aluno.nome }}</li>
+    {% empty %}
+        <li>Sem alunos ainda.</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
