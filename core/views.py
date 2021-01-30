@@ -69,12 +69,3 @@ class RealizarInscricaoControl(View):
     def get_queryset(self):
         return self.model.filter(user=self.request.user)
 
-
-class AbrirTurmaControl(View):
-    slug_field = 'titulo'
-    model = Nota
-    context_object_name = 'meu_artigo'
-    template_name = 'detalhe_artigo.html'
-
-    def get_queryset(self):
-        return self.model.filter(user=self.request.user)
