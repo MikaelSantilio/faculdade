@@ -30,7 +30,7 @@ class ControlarAndamentoInscricoesControl(ListView):
         context = super(ControlarAndamentoInscricoesControl, self).get_context_data(**kwargs)
         disciplina = get_object_or_404(Disciplina, pk=self.kwargs['pk'])
         context['disciplina'] = disciplina.nome
-        context['object_list'] = Inscricao.objects.filter(disciplina__pk=self.kwargs['pk'])
+        context['object_list'] = Inscricao.objects.filter(turma__disciplina__pk=self.kwargs['pk'])
         return context
 
     def get(self, request, *args, **kwargs):

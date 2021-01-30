@@ -66,8 +66,6 @@ class Turma(models.Model):
 
 class Inscricao(models.Model):
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
-    disciplina = models.ForeignKey(Disciplina, on_delete=models.CASCADE)
-    semestre = models.ForeignKey(Semestre, on_delete=models.CASCADE)
     turma = models.ForeignKey(Turma, on_delete=models.CASCADE)
 
 
