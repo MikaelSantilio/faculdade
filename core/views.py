@@ -38,23 +38,3 @@ class ControlarAndamentoInscricoesControl(ListView):
             raise PermissionDenied()
         return super(ControlarAndamentoInscricoesControl, self).get(request, *args, **kwargs)
 
-
-class LancarNotasControl(View):
-    pass
-
-
-class AbrirTurmaControl(View):
-    pass
-
-
-class ControlarPrazosControl(View):
-    pass
-
-
-class ControlarAtrasosControl(View):
-    pass
-
-
-class RealizarInscricaoControl(View):
-    pass
-
